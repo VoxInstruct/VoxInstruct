@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="VoxInstruct: Expressive Human Instruction-to-Speech Generation with Unified Multilingual Codec Language Modelling">
+  <meta name="keywords" content="Human computer interaction, expressive speech synthesis, codec language model, human instruction, AIGC">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VoiceCraft</title>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-L7749G0HJZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-L7749G0HJZ');
+</script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body" style="padding-bottom: 24px;">
+    <div class="container  is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">VoxInstruct: Expressive Human Instruction-to-Speech Generation with Unified Multilingual Codec Language Modelling</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              Anonymous Author(s)
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+<section id="abs" class="section" style="padding-top: 0px;">
+  <div class="container  is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Recent AIGC systems possess the capability to generate digital multimedia content based on human language instructions, such as text, image and video. 
+            However, when it comes to speech, existing methods related to human instruction-to-speech generation exhibit two limitations. 
+            Firstly, they require the division of inputs into content prompt (transcript) and description prompt (style and speaker), instead of directly supporting human instruction. 
+            This division is less natural in form and does not align with other AIGC models. 
+            Secondly, the practice of utilizing an independent description prompt to model speech style, without considering the transcript content, restricts the ability to control speech at a fine-grained level.
+            To address these limitations, we propose <b>VoxInstruct</b>, a novel unified multilingual codec language modeling framework that extends traditional text-to-speech tasks into a general <b>human instruction-to-speech</b> task. 
+            <b>Our approach enhances the expressiveness of human instruction-guided speech generation and aligns the speech generation paradigm with other modalities. </b>
+            To enable the model to automatically extract the content of synthesized speech from raw text instructions, we introduce speech semantic tokens as an intermediate representation for instruction-to-content guidance. 
+            We also incorporate multiple Classifier-Free Guidance (CFG) strategies into our codec language model, which strengthens the generated speech following human instructions. 
+            Furthermore, our model architecture and training strategies allow for the simultaneous support of combining speech prompt and descriptive human instruction for expressive speech synthesis, which is a first-of-its-kind attempt.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop is-centered has-text-centered">
+    <div class="hero-body">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <img src="./static/images/case.png" class="interpolation-image"
+            alt="Interpolate start reference image." />
+          <h2 class="subtitle has-text-centered">
+              The capabilities of the proposed expressive human instruction-to-speech generation model.
+          </h2>
+        </div>
+      </div> 
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/teaser.mp4"
+                type="video/mp4">
+      </video>
+      <h2 class="subtitle has-text-centered">
+        The capabilities of the proposed expressive human instruction-to-speech generation model.
+      </h2>
+    </div>
+  </div>
+</section>
+
+<section id="toc" class="section" style="padding-top: 0px;">
+  <div class="container  is-fluid">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Table of Contents</h2>
+        <div class="is-centered">
+          <ul>
+            <li><a href="#VoxInstruct_all"><b>Overview: Expressive Human Instruction-to-Speech Generation</b></a></li>
+            <li><a href="#VoxInstruct_is"><b>Comparison: Speech Attribute Control Based on Human Instructions</b></a></li>
+            <li><a href="#VoxInstruct_fis"><b>Comparison: Speech Stress Control through Fine-Grained Human Instructions</a></li>
+            <li><a href="#VoxInstruct_vc"><b>Comparison: Voice Cloning Ability Based on Speech Prompt</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<section id="VoxInstruct_all" class="hero">
+  <div class="hero-body">
+    <div class="container is-fluid">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Overview: Expressive Human Instruction-to-Speech Generation</h2>
+          <div class="content">
+            <p>A</p>
+          </div>
+        </div>
+      </div>
+      <div class="columns is-centered has-text-centered">
+        <table class="table" style="background-color: transparent;">
+          <thead>
+            <tr>
+              <th align="center"><strong></span>Instruction</strong></th>
+              <th align="center"><strong></span>Speech Prompt</strong></th>
+              <th align="center"><strong><span class="icon"><i class="fas fa-magic"></i></span>VoxInstruct</strong></th>
+            </tr>
+          </thead>
+          <tbody>
+      
+      <tr>
+        <td width="30%" style="text-align: left;"> <span class="icon"><i class="fas fa-magic"></i></span>Supporting English Human Instruction </td>
+      </tr>
+      
+      <tr>
+        <td width="30%" style="text-align: left;">The man adopted a high-pitched voice and maintained a moderate energy level in his amazed slow speech."What an impetuous boy he is!"</td>
+        <td width="14%" style="text-align: center;">-</td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/overview/Emotional Speech Dataset (ESD)-Emotion Speech Dataset-0011-Surprise-0011_001540.wav"
+              type="audio/wav">
+          </audio></td>
+      </tr>
+
+      <tr>
+        <td width="30%" style="text-align: left;">In a fast-paced conversation, a sad adult male with low pitch and high volume is reflecting on something someone said: "You know one of my most viewed videos so it's a definite issue that a lot of people go through but i guess you know just going on to facebook groups searching up paper whole there's just a bunch of solutions."</td>
+        <td width="14%" style="text-align: center;">-</td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/overview/YOU0000004130_S0000126.wav"
+              type="audio/wav">
+          </audio></td>
+      </tr>
+
+      
+      <tr>
+        <td width="30%" style="text-align: left;">a low pitched female voice, "Delaney had read one or two works on psychic phenomena and understood from them that spirit projection was not only quite feasible but far from uncommon."</td>
+        <td width="14%" style="text-align: center;">-</td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/overview/0006_prompttts2.wav"
+              type="audio/wav">
+          </audio></td>
+      </tr>
+
+      <tr>
+        <td width="30%" style="text-align: left;">[CaseStudy] A happy old man with low pitch and high energy, speaking quickly, happily recounts his recent activities: “But don’t you always want to be happy, Bruno?"</td>
+        <td width="14%" style="text-align: center;">-</td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/overview/1001_3.wav"
+              type="audio/wav">
+          </audio></td>
+      </tr>
+
+      <tr>
+        <td width="30%" style="text-align: left;">[CaseStudy] Engaging in a dialogue, a youthful male with normal pitch saying “But don’t you always want to be happy, Bruno?", drawing attention to “always" by stressing it significantly.</td>
+        <td width="14%" style="text-align: center;">-</td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/overview/1004_2.wav"
+              type="audio/wav">
+          </audio></td>
+      </tr>
+
+      <tr>
+        <td width="30%" style="text-align: left;"> <span class="icon"><i class="fas fa-magic"></i></span>Supporting Chinese Human Instruction </td>
+      </tr>
+
+      <tr>
+        <td width="30%" style="text-align: left;">声音中泪流满面，带有强烈的悲哀，较为亲切却又略显哀求，有些坚定，“上帝呀”以较重的语气讲，而“救我吧”则以较轻缓的语气讲，说：“上帝呀，救我吧！”</td>
+        <td width="14%" style="text-align: center;">-</td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/overview/DB_para_0101102001-1.wav"
+              type="audio/wav">
+          </audio></td>
+      </tr>
+
+      <tr>
+        <td width="30%" style="text-align: left;">老陆以一种充满深情的语调，带着轻微的诚恳请求，平和又带有一定的期望下达指示，轻轻地说“明白”，而在提到“大师兄”时语气加重，“明白就好，孩子，收好捐册，牵马去洗吧！你大师兄就快来了？”</td>
+        <td width="14%" style="text-align: center;">-</td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/overview/DB_para_0102162005-1.wav"
+              type="audio/wav">
+          </audio></td>
+      </tr>
+
+      <tr>
+        <td width="30%" style="text-align: left;">充满喜悦并感到深刻的幸福，表现得非常亲切与满足，没有犹豫地表示小莉娜带着幸福的记忆与生活，语调在描述“真正的”时稍显缓慢："这些都让我非常高兴，这是真正的幸福。这是我的回忆，又是我的生活！”</td>
+        <td width="14%" style="text-align: center;">-</td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/overview/DB_para_0201064011-0.wav"
+              type="audio/wav">
+          </audio></td>
+      </tr>
+
+      <tr>
+        <td width="30%" style="text-align: left;">一位青年男性语气坚定，声音中透漏着愤怒的情绪，音调较高，“什么都无法舍弃的人，最终将什么都无法改变。”</td>
+        <td width="14%" style="text-align: center;">-</td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/overview/0002.wav"
+              type="audio/wav">
+          </audio></td>
+      </tr>
+
+      <tr>
+        <td width="30%" style="text-align: left;">一位妈妈以床边故事的方式轻柔讲述，语气亲切，语速缓慢：“什么都无法舍弃的人，最终将什么都无法改变。”</td>
+        <td width="14%" style="text-align: center;">-</td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/overview/0009.wav"
+              type="audio/wav">
+          </audio></td>
+      </tr>
+
+      <tr>
+        <td width="30%" style="text-align: left;">一个相声演员在台上高声吆喝道，带着洋洋得意的神情，“您猜怎么着，诶这人呐他就盖了帽儿了。”</td>
+        <td width="14%" style="text-align: center;">-</td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/overview/0010.wav"
+              type="audio/wav">
+          </audio></td>
+      </tr>
+
+      <tr>
+        <td width="30%" style="text-align: left;">青年男子在说出：“铜人一摆，突然将张玉虎胁下的‘肺俞穴’一撞。”时，声音低沉，音量保持中等，语速平和，语气中透露出一丝不太明显的惊讶，整体给人一种较为严肃且坚定的印象。</td>
+        <td width="14%" style="text-align: center;">-</td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/overview/0012.wav"
+              type="audio/wav">
+          </audio></td>
+      </tr>
+
+      <tr>
+        <td width="30%" style="text-align: left;"> <span class="icon"><i class="fas fa-magic"></i></span>Supporting Multilingual Human Instruction </td>
+      </tr>
+
+      <tr>
+        <td width="30%" style="text-align: left;">“Donald Trump thinks he's making America great again. ”一个老年男主持人在电视上轻松愉快地调侃道，语速较慢，表现出震惊的情绪。</td>
+        <td width="14%" style="text-align: center;">-</td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/overview/0017.wav"
+              type="audio/wav">
+          </audio></td>
+      </tr>
+
+      <tr>
+        <td width="30%" style="text-align: left;">以中年男性的声音，声音中充满沉思，带有递进的情绪，较为亲切却又略有些坚定，"To be or not to be, that is the question."</td>
+        <td width="14%" style="text-align: center;">-</td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/overview/0007_chineseprompt.wav"
+              type="audio/wav">
+          </audio></td>
+      </tr>
+
+      <tr>
+        <td width="30%" style="text-align: left;">An old female is performing on a talk show, “中国有句古话，叫做识时务者为俊杰，但我不能理解是什么意思。”, speaking at a rapid pace.</td>
+        <td width="14%" style="text-align: center;">-</td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/overview/0018.wav"
+              type="audio/wav">
+          </audio></td>
+      </tr>
+
+      
+      <tr>
+        <td width="30%" style="text-align: left;">男声以较低的音高，较低的音量，充满喜悦并感到深刻的幸福，表现得非常亲切与满足，“I have a dream, 世界会更好。”</td>
+        <td width="14%" style="text-align: center;">-</td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/overview/codeswitch_2_en.wav"
+              type="audio/wav">
+          </audio></td>
+      </tr>
+
+      <tr>
+        <td width="30%" style="text-align: left;">With a sense of sadness, a young boy with high pitch and low volume speaks at a normal speed, expressing his feelings, saying, "我有一种爱。那种当你准备好一盆Epsom盐浴时的感觉"</td>
+        <td width="14%" style="text-align: center;">-</td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/overview/mix_0001.wav"
+              type="audio/wav">
+          </audio></td>
+      </tr>
+
+      <tr>
+        <td width="30%" style="text-align: left;">以镇定的语气，一位声音高亢且略带脆弱感的少女缓慢地表达她的愿望：“IT WOULD BE AMAZING TO JUST QUICKLY SEE THAT AS A CHART AND JUST GET A QUICK VISUALIZATION.” 她慢慢地突出她的思考和期望。</td>
+        <td width="14%" style="text-align: center;">-</td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/overview/mix_0002.wav"
+              type="audio/wav">
+          </audio></td>
+      </tr>
+      
+      
+      
+
+      <tr>
+        <td width="30%" style="text-align: left;"> <span class="icon"><i class="fas fa-magic"></i></span>Supporting Voice Cloning </td>
+      </tr>
+
+      <tr>
+        <td width="30%" style="text-align: left;">“人间四月芳菲尽，山寺桃花始盛开。”</td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/overview/oldF.wav"
+              type="audio/wav">
+          </audio></td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/overview/oldF_infer.wav"
+              type="audio/wav">
+          </audio></td>
+      </tr>
+      
+      <tr>
+        <td width="30%" style="text-align: left;">“记忆是一条早已干涸的河流，只在毫无生气的河床中剩下零落的砾石。”</td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/overview/middleM.wav"
+              type="audio/wav">
+          </audio></td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/overview/middleM_infer.wav"
+              type="audio/wav">
+          </audio></td>
+      </tr>
+
+      <tr>
+        <td width="30%" style="text-align: left;">“Tom did not like to steal, but he had no one to teach him to be honest.”</td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/overview/sadF.wav"
+              type="audio/wav">
+          </audio></td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/overview/sadF_infer.wav"
+              type="audio/wav">
+          </audio></td>
+      </tr>
+
+      <tr>
+        <td width="30%" style="text-align: left;">“To be or not to be, that is the question, To be or not to be, that is the question.”</td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/overview/actor_ref.wav"
+              type="audio/wav">
+          </audio></td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/overview/actor_00001.wav"
+              type="audio/wav">
+          </audio></td>
+      </tr>
+
+      <tr>
+        <td width="30%" style="text-align: left;">“These moments when we dare to aim higher, to break barriers, to reach for the stars, to make the unknown known. We count these moments as our proudest achievements.”</td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/overview/actor_ref.wav"
+              type="audio/wav">
+          </audio></td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/overview/actor_00002.wav"
+              type="audio/wav">
+          </audio></td>
+      </tr>
+      
+      <tr>
+        <td width="30%" style="text-align: left;"> <span class="icon"><i class="fas fa-magic"></i></span>Attempts on Voice Style Modification </td>
+      </tr>
+      
+
+      <tr>
+        <td width="30%" style="text-align: left;">[CaseStudy] Stated sadly with a heavy heart and spoken very slowly: “For it is very hard, my LORD. To carry on, to persist without yielding."</td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/overview/case2_vctk_p254_ref.wav"
+              type="audio/wav">
+          </audio></td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/overview/case2_vctk_p254_mod1.wav"
+              type="audio/wav">
+          </audio></td>
+      </tr>
+
+      <tr>
+        <td width="30%" style="text-align: left;">[CaseStudy] In the television series, a general said in a calm tone, “For it is very hard, my LORD. To carry on, to persist without yielding", emphasizing the word “yielding".</td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/overview/case2_vctk_p254_ref.wav"
+              type="audio/wav">
+          </audio></td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/overview/case2_vctk_p254_mod2.wav"
+              type="audio/wav">
+          </audio></td>
+      </tr>
+
+            </tbody>
+        </table>
+      </div>
+              <div class="columns is-centered has-text-centered">
+                <div class="column is-four-fifths">
+                  <a href="#toc" class="button is-primary">Go Back to Table of Contents</a>
+                </div>
+              </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="VoxInstruct_is" class="hero">
+  <div class="hero-body">
+    <div class="container is-fluid">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Comparison: Speech Attribute Control Based on Human Instructions</h2>
+          <div class="content">
+            <p>A</p>
+          </div>
+        </div>
+      </div>
+      <div class="columns is-centered has-text-centered">
+        <table class="table" style="background-color: transparent;">
+          <thead>
+            <tr>
+              <th align="center"><strong></span>Instruction</strong></th>
+              <th align="center"><strong>PromptTTS</strong></th>
+              <th align="center"><strong>Salle</strong></th>
+              <th align="center"><strong><span class="icon"><i class="fas fa-magic"></i></span>VoxInstruct(w/o pre-training)</strong></th>
+              <th align="center"><strong><span class="icon"><i class="fas fa-magic"></i></span>VoxInstruct</strong></th>
+            </tr>
+          </thead>
+          <tbody>
+      <tr>
+        <td width="30%" style="text-align: left;">Fast cars, that had the nice clothes, that had the money, they was
+          criminals.</td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/"
+              type="audio/wav">
+          </audio></td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/"
+              type="audio/wav">
+          </audio></td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/"
+              type="audio/wav">
+          </audio></td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/"
+              type="audio/wav">
+          </audio></td>
+      </tr>
+
+            </tbody>
+        </table>
+      </div>
+              <div class="columns is-centered has-text-centered">
+                <div class="column is-four-fifths">
+                  <a href="#toc" class="button is-primary">Go Back to Table of Contents</a>
+                </div>
+              </div>
+    </div>
+  </div>
+</section>
+
+<section id="VoxInstruct_fis" class="hero is-light ">
+  <div class="hero-body">
+    <div class="container is-fluid">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Comparison: Speech Stress Control through Fine-Grained Human Instructions</h2>
+          <div class="content">
+            <p>In this section, we compare VoxInstruct with PromptTTS and Salle to demonstrate that our unified instruction-based speech generation approach has superior fine-grained control over speech。
+              We fine-tuned all these models on an artificial fine-grained instruction dataset.  </a></p> 
+          </div>
+        </div>
+      </div>
+      <div class="columns is-centered has-text-centered">
+        <table class="table" style="background-color: transparent;">
+          <thead>
+            <tr>
+              <th align="center"><strong></span>Instruction</strong></th>
+              <th align="center"><strong>PromptTTS</strong></th>
+              <th align="center"><strong>Salle</strong></th>
+              <th align="center"><strong><span class="icon"><i class="fas fa-magic"></i></span>VoxInstruct</strong></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td width="30%" style="text-align: left;">Focusing on the words "BY JOHN KENDRICK BANGS" a natural-sounding female youth with high pitch and low volume speaks slowly, piquing the curiosity of the audience with her unique voice, uttering "KENDRICK" with particular stress.</td>
+              <td width="14%" style="text-align: center;"><audio controls="">
+                  <source
+                    src="static/audio_sample/stress/prompttts/0083.wav"
+                    type="audio/wav">
+                </audio></td>
+              <td width="14%" style="text-align: center;"><audio controls="">
+                  <source
+                    src="static/audio_sample/stress/salle/0083.wav"
+                    type="audio/wav">
+                </audio></td>
+              <td width="14%" style="text-align: center;"><audio controls="">
+                  <source
+                    src="static/audio_sample/stress/voxinstruct/0083.wav"
+                    type="audio/wav">
+                </audio></td>
+            </tr>
+            <tr>
+              <td width="30%" style="text-align: left;">“"That's a lie, Lucius," answered Lucille steadily.” answered a confident adult female with high pitch and normal volume, speaking slowly and thoughtfully, emphasizing "Lucille" strongly in the dialogue.</td>
+              <td width="14%" style="text-align: center;"><audio controls="">
+                  <source
+                    src="static/audio_sample/stress/prompttts/0112.wav"
+                    type="audio/wav">
+                </audio></td>
+              <td width="14%" style="text-align: center;"><audio controls="">
+                  <source
+                    src="static/audio_sample/stress/salle/0112.wav"
+                    type="audio/wav">
+                </audio></td>
+              <td width="14%" style="text-align: center;"><audio controls="">
+                  <source
+                    src="static/audio_sample/stress/voxinstruct/0112.wav"
+                    type="audio/wav">
+                </audio></td>
+            </tr>
+            <tr>
+              <td width="30%" style="text-align: left;">With a fast pace and high pitch, a natural youth male expresses his thoughts:"I don't propose to respect your little fancies." This dialogue reveals a stance of independence and philosophical openness, perhaps discussing a debate topic, or sharing an opinion, giving "little" a pronounced stress.</td>
+              <td width="14%" style="text-align: center;"><audio controls="">
+                  <source
+                    src="static/audio_sample/stress/prompttts/0099.wav"
+                    type="audio/wav">
+                </audio></td>
+              <td width="14%" style="text-align: center;"><audio controls="">
+                  <source
+                    src="static/audio_sample/stress/salle/0099.wav"
+                    type="audio/wav">
+                </audio></td>
+              <td width="14%" style="text-align: center;"><audio controls="">
+                  <source
+                    src="static/audio_sample/stress/voxinstruct/0099.wav"
+                    type="audio/wav">
+                </audio></td>
+            </tr>
+            <tr>
+              <td width="30%" style="text-align: left;">In a natural tone, a normal-pitched adult male speaks quickly:"The thing is a mere accident of words.", stressing "mere" above all other words.</td>
+              <td width="14%" style="text-align: center;"><audio controls="">
+                  <source
+                    src="static/audio_sample/stress/prompttts/0155.wav"
+                    type="audio/wav">
+                </audio></td>
+              <td width="14%" style="text-align: center;"><audio controls="">
+                  <source
+                    src="static/audio_sample/stress/salle/0155.wav"
+                    type="audio/wav">
+                </audio></td>
+              <td width="14%" style="text-align: center;"><audio controls="">
+                  <source
+                    src="static/audio_sample/stress/voxinstruct/0155.wav"
+                    type="audio/wav">
+                </audio></td>
+            </tr>
+            <tr>
+              <td width="30%" style="text-align: left;">Expressing natural emotions in a normal pace, an adult female with a high pitch and low volume remarks: "A roar that seemed to rend the heavens followed.", making "heavens" stand out through emphasis.</td>
+              <td width="14%" style="text-align: center;"><audio controls="">
+                  <source
+                    src="static/audio_sample/stress/prompttts/0298.wav"
+                    type="audio/wav">
+                </audio></td>
+              <td width="14%" style="text-align: center;"><audio controls="">
+                  <source
+                    src="static/audio_sample/stress/salle/0298.wav"
+                    type="audio/wav">
+                </audio></td>
+              <td width="14%" style="text-align: center;"><audio controls="">
+                  <source
+                    src="static/audio_sample/stress/voxinstruct/0298.wav"
+                    type="audio/wav">
+                </audio></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+              <div class="columns is-centered has-text-centered">
+                <div class="column is-four-fifths">
+                  <a href="#toc" class="button is-primary">Go Back to Table of Contents</a>
+                </div>
+              </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section id="VoxInstruct_vc" class="hero ">
+  <div class="hero-body">
+    <div class="container is-fluid">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Comparison: Voice Cloning Ability Based on Speech Prompt</h2>
+            <p>In this section, we compare VoxInstruct with the zero-shot TTS model VALL-E and VALL-E X, which respectively focus on <b>monolingual</b> and <b>cross-lingual</b> scenarios.
+            These samples are from official demopages of VALL-E and VALL-E X, and all speakers are unseen during training.  </p>
+          </div>
+        </div>
+      </div>
+      <div class="columns is-centered has-text-centered">
+        <table class="table" style="background-color: transparent;">
+          <thead>
+            <tr>
+              <th align="center"><strong></span>Instruction (just transcript)</strong></th>
+              <th align="center"><strong>Speech Prompt</strong></th> 
+              <th align="center"><strong>VALL-E </strong></th>
+              <th align="center"><strong>VALL-E X </strong></th>
+              <th align="center"><strong><span class="icon"><i class="fas fa-magic"></i></span>VoxInstruct</strong></th>
+              <th align="center"><strong>Ground Truth (if provided) </strong></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td width="30%" style="text-align: left;">"And lay me down in thy cold bed and leave my shining lot."</td>
+              <td width="14%" style="text-align: center;"><audio controls="">
+                  <source src="static/audio_sample/vc/reference/librispeech_908-157963-0027.wav" type="audio/wav">
+                </audio></td>
+                <td width="14%" style="text-align: center;"><audio controls="">
+                  <source src="static/audio_sample/vc/base/librispeech_908-157963-0027.wav" type="audio/wav">
+                </audio></td>
+                <td width="14%" style="text-align: center;">-</td>
+                <td width="14%" style="text-align: center;"><audio controls="">
+                  <source src="static/audio_sample/vc/pro/librispeech_908-157963-0027.wav" type="audio/wav">
+                </audio></td>
+                <td width="14%" style="text-align: center;"><audio controls="">
+                  <source src="static/audio_sample/vc/gt/librispeech_908-157963-0027.wav" type="audio/wav">
+                </audio></td>
+              </tr>
+
+            <tr>
+              <td width="30%" style="text-align: left;">"We have to reduce the number of plastic bags."</td>
+              <td width="14%" style="text-align: center;"><audio controls="">
+                  <source src="static/audio_sample/vc/reference/vctk_p254.wav" type="audio/wav">
+                </audio></td>
+                <td width="14%" style="text-align: center;"><audio controls="">
+                  <source src="static/audio_sample/vc/base/vctk_p254.wav" type="audio/wav">
+                </audio></td>
+                <td width="14%" style="text-align: center;">-</td>
+                <td width="14%" style="text-align: center;"><audio controls="">
+                  <source src="static/audio_sample/vc/pro/vctk_p254.wav" type="audio/wav">
+                </audio></td>
+                <td width="14%" style="text-align: center;"><audio controls="">
+                  <source src="static/audio_sample/vc/gt/vctk_p254.wav" type="audio/wav">
+                </audio></td>
+              </tr>
+            
+            <tr>
+              <td width="30%" style="text-align: left;">"So what is the campaign about?"</td>
+              <td width="14%" style="text-align: center;"><audio controls="">
+                  <source src="static/audio_sample/vc/reference/vctk_p263.wav" type="audio/wav">
+                </audio></td>
+                <td width="14%" style="text-align: center;"><audio controls="">
+                  <source src="static/audio_sample/vc/base/vctk_p263.wav" type="audio/wav">
+                </audio></td>
+                <td width="14%" style="text-align: center;">-</td>
+                <td width="14%" style="text-align: center;"><audio controls="">
+                  <source src="static/audio_sample/vc/pro/vctk_p263.wav" type="audio/wav">
+                </audio></td>
+                <td width="14%" style="text-align: center;"><audio controls="">
+                  <source src="static/audio_sample/vc/gt/vctk_p263.wav" type="audio/wav">
+                </audio></td>
+              </tr>
+
+            <tr>
+              <td width="30%" style="text-align: left;">"Um we have to pay have this security fee just in case she would damage something but um."</td>
+              <td width="14%" style="text-align: center;"><audio controls="">
+                  <source src="static/audio_sample/vc/reference/fisher_2.wav" type="audio/wav">
+                </audio></td>
+                <td width="14%" style="text-align: center;"><audio controls="">
+                  <source src="static/audio_sample/vc/base/fisher_2.wav" type="audio/wav">
+                </audio></td>
+                <td width="14%" style="text-align: center;">-</td>
+                <td width="14%" style="text-align: center;"><audio controls="">
+                  <source src="static/audio_sample/vc/pro/fisher_2.wav" type="audio/wav">
+                </audio></td>
+                <td width="14%" style="text-align: center;"><audio controls="">
+                  <source src="static/audio_sample/vc/gt/fisher_2.wav" type="audio/wav">
+                </audio></td>
+              </tr>
+            
+            <tr>
+              <td width="30%" style="text-align: left;">"As friends thing I definitely I've got more male friends"</td>
+              <td width="14%" style="text-align: center;"><audio controls="">
+                  <source src="static/audio_sample/vc/reference/fisher_4.wav" type="audio/wav">
+                </audio></td>
+                <td width="14%" style="text-align: center;"><audio controls="">
+                  <source src="static/audio_sample/vc/base/fisher_4.wav" type="audio/wav">
+                </audio></td>
+                <td width="14%" style="text-align: center;">-</td>
+                <td width="14%" style="text-align: center;"><audio controls="">
+                  <source src="static/audio_sample/vc/pro/fisher_4.wav" type="audio/wav">
+                </audio></td>
+                <td width="14%" style="text-align: center;"><audio controls="">
+                  <source src="static/audio_sample/vc/gt/fisher_4.wav" type="audio/wav">
+                </audio></td>
+              </tr>
+
+            <tr>
+              <td width="30%" style="text-align: left;">"我相信你在那里涉及到了某个要点"</td>
+              <td width="14%" style="text-align: center;"><audio controls="">
+                  <source src="static/audio_sample/vc/reference/LID_enzh_emime_en2zh_266.wav" type="audio/wav">
+                </audio></td>
+                <td width="14%" style="text-align: center;">-</td>
+                <td width="14%" style="text-align: center;"><audio controls="">
+                  <source src="static/audio_sample/vc/base/LID_enzh_emime_en2zh_266.wav" type="audio/wav">
+                </audio></td>
+                <td width="14%" style="text-align: center;"><audio controls="">
+                  <source src="static/audio_sample/vc/pro/LID_enzh_emime_en2zh_266.wav" type="audio/wav">
+                </audio></td>
+                <td width="14%" style="text-align: center;">-</td>
+              </tr>
+
+            <tr>
+              <td width="30%" style="text-align: left;">"坚持房地产调控政策不动摇"</td>
+              <td width="14%" style="text-align: center;"><audio controls="">
+                  <source src="static/audio_sample/vc/reference/xtts_output_238_decompressed.wav" type="audio/wav">
+                </audio></td>
+                <td width="14%" style="text-align: center;">-</td>
+                <td width="14%" style="text-align: center;"><audio controls="">
+                  <source src="static/audio_sample/vc/base/xtts_output_238_decompressed.wav" type="audio/wav">
+                </audio></td>
+                <td width="14%" style="text-align: center;"><audio controls="">
+                  <source src="static/audio_sample/vc/pro/xtts_output_238_decompressed.wav" type="audio/wav">
+                </audio></td>
+                <td width="14%" style="text-align: center;">-</td>
+              </tr>
+
+            <tr>
+              <td width="30%" style="text-align: left;">"两千六百四十八万二千五百四十六"</td>
+              <td width="14%" style="text-align: center;"><audio controls="">
+                  <source src="static/audio_sample/vc/reference/xtts_output_590_decompressed.wav" type="audio/wav">
+                </audio></td>
+                <td width="14%" style="text-align: center;">-</td>
+                <td width="14%" style="text-align: center;"><audio controls="">
+                  <source src="static/audio_sample/vc/base/xtts_output_590_decompressed.wav" type="audio/wav">
+                </audio></td>
+                <td width="14%" style="text-align: center;"><audio controls="">
+                  <source src="static/audio_sample/vc/pro/xtts_output_590_decompressed.wav" type="audio/wav">
+                </audio></td>
+                <td width="14%" style="text-align: center;">-</td>
+              </tr>
+
+            <tr>
+              <td width="30%" style="text-align: left;">"One dark night at the head of a score of his tribe, he fell upon Wabigoon’s camp, his object being the abduction of the princess."</td>
+              <td width="14%" style="text-align: center;"><audio controls="">
+                  <source src="static/audio_sample/vc/reference/xtts_emime2libri_905_en.wav" type="audio/wav">
+                </audio></td>
+                <td width="14%" style="text-align: center;">-</td>
+                <td width="14%" style="text-align: center;"><audio controls="">
+                  <source src="static/audio_sample/vc/base/xtts_emime2libri_905_en.wav" type="audio/wav">
+                </audio></td>
+                <td width="14%" style="text-align: center;"><audio controls="">
+                  <source src="static/audio_sample/vc/pro/xtts_emime2libri_905_en.wav" type="audio/wav">
+                </audio></td>
+                <td width="14%" style="text-align: center;">-</td>
+              </tr>
+
+            <tr>
+              <td width="30%" style="text-align: left;">"He honours whatever he recognizes in himself, such morality equals self-glorification."</td>
+              <td width="14%" style="text-align: center;"><audio controls="">
+                  <source src="static/audio_sample/vc/reference/xtts_emime2libri_729_en.wav" type="audio/wav">
+                </audio></td>
+                <td width="14%" style="text-align: center;">-</td>
+                <td width="14%" style="text-align: center;"><audio controls="">
+                  <source src="static/audio_sample/vc/base/xtts_emime2libri_729_en.wav" type="audio/wav">
+                </audio></td>
+                <td width="14%" style="text-align: center;"><audio controls="">
+                  <source src="static/audio_sample/vc/pro/xtts_emime2libri_729_en.wav" type="audio/wav">
+                </audio></td>
+                <td width="14%" style="text-align: center;">-</td>
+              </tr>
+
+            
+            </tbody>
+            </table>
+            </div>
+                    <div class="columns is-centered has-text-centered">
+                      <div class="column is-four-fifths">
+                        <a href="#toc" class="button is-primary">Go Back to Table of Contents</a>
+                      </div>
+                    </div>
+            </div>
+            </div>
+            </section>
+
+
+<footer class="footer">
+  <div class="container is-fluid">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Licenses</h2>
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative
+            Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            Website source code based on the <a
+            href="https://github.com/nerfies/nerfies.github.io">Nerfies</a> project page.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
