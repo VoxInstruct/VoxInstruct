@@ -171,7 +171,7 @@
       </tr>
 
       <tr>
-        <td width="30%" style="text-align: left;">In a fast-paced conversation, a sad adult male with low pitch and high volume is reflecting on something someone said: "You know one of my most viewed videos so it's a definite issue that a lot of people go through but i guess you know just going on to facebook groups searching up paper whole there's just a bunch of solutions."</td>
+        <td width="30%" style="text-align: left;">In a fast-paced conversation, a sad adult male with low pitch is reflecting on something someone said: "You know one of my most viewed videos so it's a definite issue that a lot of people go through but i guess you know just going on to facebook groups searching up paper whole there's just a bunch of solutions."</td>
         <td width="14%" style="text-align: center;">-</td>
         <td width="14%" style="text-align: center;"><audio controls="">
             <source src="static/audio_sample/overview/YOU0000004130_S0000126.wav"
@@ -185,6 +185,42 @@
         <td width="14%" style="text-align: center;">-</td>
         <td width="14%" style="text-align: center;"><audio controls="">
             <source src="static/audio_sample/overview/0006_prompttts2.wav"
+              type="audio/wav">
+          </audio></td>
+      </tr>
+
+      <tr>
+        <td width="30%" style="text-align: left;">Discussing science and technology, a sad adult male with high pitch and normal energy speaks rapidly. "there are no three hydrogen, because here."</td>
+        <td width="14%" style="text-align: center;">-</td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/overview/YOU0000003048_S0002957.wav"
+              type="audio/wav">
+          </audio></td>
+      </tr>
+
+      <tr>
+        <td width="30%" style="text-align: left;">While whitewashing the fence, a fearful adult male with normal pitch reminisces: "one time when I was whitewashing the fence." this scene belongs to the category of film and animation.</td>
+        <td width="14%" style="text-align: center;">-</td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/overview/YOU0000002825_S0000816.wav"
+              type="audio/wav">
+          </audio></td>
+      </tr>
+
+      <tr>
+        <td width="30%" style="text-align: left;">Speaking calmly, an elderly male with normal pitch and high energy discusses the potential name change of a nfl team, sharing: "in the end, they said they still would have gone on the show had they known there would be a debate but at least one of them wouldn't have worn his red skins jacket which forces the question if they change the team name."</td>
+        <td width="14%" style="text-align: center;">-</td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/overview/YOU0000001059_S0000088.wav"
+              type="audio/wav">
+          </audio></td>
+      </tr>
+
+      <tr>
+        <td width="30%" style="text-align: left;">Describing the news and politics scene, a happy youth with low pitch joyfully mentions:"to lori and benjie sagarin, rabbi michael weinberg, bruce crane and beth sair at temple beth israel." he appreciates their contributions.</td>
+        <td width="14%" style="text-align: center;">-</td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/overview/POD0000001440_S0000481.wav"
               type="audio/wav">
           </audio></td>
       </tr>
@@ -464,7 +500,9 @@
         <div class="column is-four-fifths">
           <h2 class="title is-3">Comparison: Speech Attribute Control Based on Human Instructions</h2>
           <div class="content">
-            <p>In this section, we compare VoxInstruct with PromptTTS and Salle to demonstrate that our proposed approach has superior performance, which can convert human instructions into more natural and expressive speech.</p>
+            <p>In this section, we compare VoxInstruct with PromptTTS and Salle to demonstrate that our proposed approach has superior performance, which can convert human instructions into more natural and expressive speech. 
+              Noted that PromptTTS and Salle use seperate content and description prompts, while VoxInstruct uses human instructions directly.
+            </p>
           </div>
         </div>
       </div>
@@ -475,31 +513,208 @@
               <th align="center"><strong></span>Instruction</strong></th>
               <th align="center"><strong>PromptTTS</strong></th>
               <th align="center"><strong>Salle</strong></th>
-              <th align="center"><strong><span class="icon"><i class="fas fa-magic"></i></span>VoxInstruct(w/o pre-training)</strong></th>
+              <th align="center"><strong>VoxInstruct(w/o pre-training)</strong></th>
               <th align="center"><strong><span class="icon"><i class="fas fa-magic"></i></span>VoxInstruct</strong></th>
             </tr>
           </thead>
           <tbody>
       <tr>
-        <td width="30%" style="text-align: left;">Fast cars, that had the nice clothes, that had the money, they was
-          criminals.</td>
+        <td width="30%" style="text-align: left;">A sad young female with low pitch and normal energy sadly expresses:"and saw that the kylix on the floor." in a gaming context, she reflects on a visual observation.</td>
         <td width="14%" style="text-align: center;"><audio controls="">
-            <source src="static/audio_sample/"
+            <source src="static/audio_sample/instruction/prompttts/YOU0000005530_S0000157.wav"
+              type="audio/wav">
+            </audio></td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/instruction/salle/YOU0000005530_S0000157.wav"
+              type="audio/wav">
+            </audio></td>
+         <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/instruction/proposed/YOU0000005530_S0000157.wav"
+              type="audio/wav">
+            </audio></td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/instruction/proposed_pt/YOU0000005530_S0000157.wav"
+              type="audio/wav">
+            </audio></td>
+      </tr>
+      <tr>
+        <td width="30%" style="text-align: left;">In the realm of News and Politics, an old, female speaker with normal pitch and high energy speaks slowly and angrily, proclaiming: "All the single ladies, and good and mad the revolutionary power of women's anger avi klein is a psychotherapist and licensed clinical social worker."</td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/instruction/prompttts/POD0000000600_S0000353.wav"
+              type="audio/wav">
+            </audio></td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/instruction/salle/POD0000000600_S0000353.wav"
+              type="audio/wav">
+            </audio></td>
+         <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/instruction/proposed/POD0000000600_S0000353.wav"
+              type="audio/wav">
+            </audio></td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/instruction/proposed_pt/POD0000000600_S0000353.wav"
+              type="audio/wav">
+            </audio></td>
+      </tr>
+      <tr>
+        <td width="30%" style="text-align: left;">In the context of Nonprofits and Activism, a fearful youth with low pitch and normal energy speaks rapidly, expressing uncertainty: "Who knows what's going to happen to it?"</td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/instruction/prompttts/YOU0000004146_S0000401.wav"
+              type="audio/wav">
+            </audio></td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/instruction/salle/YOU0000004146_S0000401.wav"
+              type="audio/wav">
+            </audio></td>
+         <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/instruction/proposed/YOU0000004146_S0000401.wav"
+              type="audio/wav">
+            </audio></td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/instruction/proposed_pt/YOU0000004146_S0000401.wav"
+              type="audio/wav">
+            </audio></td>
+      </tr>
+      <tr>
+        <td width="30%" style="text-align: left;">"I dropped the gun and he got it." Shares an old male with low pitch and normal energy in the field of Education, conveying a sense of angry while recounting an incident.</td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/instruction/prompttts/YOU0000000171_S0007208.wav"
+              type="audio/wav">
+            </audio></td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/instruction/salle/YOU0000000171_S0007208.wav"
+              type="audio/wav">
+            </audio></td>
+         <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/instruction/proposed/YOU0000000171_S0007208.wav"
+              type="audio/wav">
+            </audio></td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/instruction/proposed_pt/YOU0000000171_S0007208.wav"
+              type="audio/wav">
+            </audio></td>
+      </tr>
+      <tr>
+        <td width="30%" style="text-align: left;">In the category of an audiobook, a sad adult female with a low pitch and fast speed shares: "Very little could be seen through the windows." Despite limited visibility, her emotions are expressed deeply.</td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/instruction/prompttts/AUD0000000931_S0000186.wav"
+              type="audio/wav">
+            </audio></td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/instruction/salle/AUD0000000931_S0000186.wav"
+              type="audio/wav">
+            </audio></td>
+         <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/instruction/proposed/AUD0000000931_S0000186.wav"
+              type="audio/wav">
+            </audio></td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/instruction/proposed_pt/AUD0000000931_S0000186.wav"
+              type="audio/wav">
+            </audio></td>
+      </tr>
+      <tr>
+        <td width="30%" style="text-align: left;">少年男孩满怀愤怒，用大声的音量和快速的语速，说：“抵制日货真不如抵制蠢货。”
+          <p style="font-style: italic; color: rgb(130, 130, 130);">(trans: With intense anger, a teenage boy speaks loudly and quickly, saying, "Boycotting Japanese goods is nothing compared to boycotting stupid people.")</p></td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/instruction/prompttts/huawei_emotion_wav1-275.wav"
               type="audio/wav">
           </audio></td>
         <td width="14%" style="text-align: center;"><audio controls="">
-            <source src="static/audio_sample/"
+            <source src="static/audio_sample/instruction/salle/huawei_emotion_wav1-275.wav"
               type="audio/wav">
           </audio></td>
         <td width="14%" style="text-align: center;"><audio controls="">
-            <source src="static/audio_sample/"
+            <source src="static/audio_sample/instruction/proposed/huawei_emotion_wav1-275.wav"
               type="audio/wav">
           </audio></td>
         <td width="14%" style="text-align: center;"><audio controls="">
-            <source src="static/audio_sample/"
+            <source src="static/audio_sample/instruction/proposed_pt/huawei_emotion_wav1-275.wav"
               type="audio/wav">
           </audio></td>
       </tr>
+      <tr>
+        <td width="30%" style="text-align: left;">青年女性充满高兴的语气说:“明天又是周一了真的不想上班想念我的床。”她的语速中等，音量提高，音调稳定，特别强调“周一”二字，生怕大家没听清楚。
+          <p style="font-style: italic; color: rgb(130, 130, 130);">(trans: With a tone filled with happiness, a young woman says, "Tomorrow is Monday again, I really don't want to go to work, I miss my bed." Her speech is of moderate speed, with increased volume and stable tone. She particularly emphasizes the word "Monday," afraid that everyone might not hear it clearly.)</p></td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/instruction/prompttts/huawei_emotion_wav1-403.wav"
+              type="audio/wav">
+          </audio></td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/instruction/salle/huawei_emotion_wav1-403.wav"
+              type="audio/wav">
+          </audio></td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/instruction/proposed/huawei_emotion_wav1-403.wav"
+              type="audio/wav">
+          </audio></td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/instruction/proposed_pt/huawei_emotion_wav1-403.wav"
+              type="audio/wav">
+          </audio></td>
+      </tr>
+      <tr>
+        <td width="30%" style="text-align: left;">青年女子用自然的语调并音量高昂地，语速慢慢地说：“越想越气，越气我就越控制不住。”
+          <p style="font-style: italic; color: rgb(130, 130, 130);">(trans: The young woman speaks in a natural tone with raised volume, slowly saying, "The more I think about it, the angrier I get, and the angrier I get, the less control I have.")</p></td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/instruction/prompttts/huawei_emotion_wav3-809.wav"
+              type="audio/wav">
+          </audio></td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/instruction/salle/huawei_emotion_wav3-809.wav"
+              type="audio/wav">
+          </audio></td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/instruction/proposed/huawei_emotion_wav3-809.wav"
+              type="audio/wav">
+          </audio></td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/instruction/proposed_pt/huawei_emotion_wav3-809.wav"
+              type="audio/wav">
+          </audio></td>
+      </tr>
+      <tr>
+        <td width="30%" style="text-align: left;">青年男子用充满激赏的说话方式，将音量调低，语速飞快，说：“最满意的就是你这样听话的人！”
+          <p style="font-style: italic; color: rgb(130, 130, 130);">(trans: With an appreciative tone, the young man lowers his voice and speaks rapidly, saying, "The most satisfying thing is someone like you who listens so obediently!")</p></td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/instruction/prompttts/huawei_emotion_wav3-845.wav"
+              type="audio/wav">
+          </audio></td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/instruction/salle/huawei_emotion_wav3-845.wav"
+              type="audio/wav">
+          </audio></td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/instruction/proposed/huawei_emotion_wav3-845.wav"
+              type="audio/wav">
+          </audio></td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/instruction/proposed_pt/huawei_emotion_wav3-845.wav"
+              type="audio/wav">
+          </audio></td>
+      </tr>
+      <tr>
+        <td width="30%" style="text-align: left;">青年男子低沉沙哑的声音，语速缓慢而矜持，平静地讲话，声音中的客套不带温柔：“平时十分客气的老张，竟然拒绝了他的要求。”
+          <p style="font-style: italic; color: rgb(130, 130, 130);">(trans: In a low, hoarse voice, the young man speaks slowly and reservedly, delivering his words calmly. The politeness in his voice lacks warmth as he says, "The usually very polite Old Zhang unexpectedly refused his request.")</p></td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/instruction/prompttts/huawei_emotion_wav3-2229.wav"
+              type="audio/wav">
+          </audio></td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/instruction/salle/huawei_emotion_wav3-2229.wav"
+              type="audio/wav">
+          </audio></td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/instruction/proposed/huawei_emotion_wav3-2229.wav"
+              type="audio/wav">
+          </audio></td>
+        <td width="14%" style="text-align: center;"><audio controls="">
+            <source src="static/audio_sample/instruction/proposed_pt/huawei_emotion_wav3-2229.wav"
+              type="audio/wav">
+          </audio></td>
+      </tr>
+      
+
 
             </tbody>
         </table>
